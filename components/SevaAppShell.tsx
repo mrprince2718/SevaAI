@@ -9,7 +9,6 @@ import HomeHubView from './HomeHubView';
 import CitizenKioskView from './CitizenKioskView';
 import MamlatdarDashboardView from './MamlatdarDashboardView';
 import BlueprintImpactView from './BlueprintImpactView';
-import GrantPitchView from './GrantPitchView';
 
 function MainViewport() {
   const {activeView} = useSeva();
@@ -38,7 +37,6 @@ function MainViewport() {
             {activeView === 'kiosk' && <CitizenKioskView />}
             {activeView === 'mamlatdar' && <MamlatdarDashboardView />}
             {activeView === 'blueprint' && <BlueprintImpactView />}
-            {activeView === 'grant' && <GrantPitchView />}
           </motion.div>
         </AnimatePresence>
       </main>

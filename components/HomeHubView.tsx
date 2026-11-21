@@ -5,7 +5,6 @@ import {
   MonitorSmartphone,
   ShieldCheck,
   Cpu,
-  Award,
   ArrowRight,
   Mic,
   Keyboard,
@@ -15,6 +14,10 @@ import {
   Rocket,
   CheckCircle2,
   FileText,
+  SlidersHorizontal,
+  Clock,
+  IndianRupee,
+  Zap,
 } from 'lucide-react';
 import {useSeva} from '@/lib/seva-store';
 import {UI_COPY} from '@/lib/i18n';
@@ -31,6 +34,20 @@ export default function HomeHubView() {
   const {language, setActiveView, launchKiosk, applications} = useSeva();
   const [homeSpeaking, setHomeSpeaking] = useState(false);
   const [homeMuted, setHomeMuted] = useState(false);
+  const [talukaCount, setTalukaCount] = useState<number>(25);
+
+  // Interactive Taluka Deployment Simulator calculations (₹68,000/unit)
+  const hardwareCapex = talukaCount * 68000;
+  const annualCertificates = talukaCount * 36000; // ~100 apps/day/taluka
+  const citizenSavingsInr = annualCertificates * 1200; // ₹1,200 saved in touts & travel
+  const officerHoursSaved = Math.round((annualCertificates * 14.75) / 60);
+
+  const formatCrOrLakhs = (val: number) => {
+    if (val >= 10000000) {
+      return `₹${(val / 10000000).toFixed(2)} Cr`;
+    }
+    return `₹${(val / 100000).toFixed(2)} L`;
+  };
 
   useEffect(() => {
     return subscribeSpeechSnapshot((snap) => {
@@ -128,32 +145,18 @@ export default function HomeHubView() {
       number: '03',
       title:
         language === 'gu'
-          ? 'હાર્ડવેર અને કીબોર્ડ બ્લુપ્રિન્ટ'
+          ? 'હાર્ડવેર અને ₹૬૮,૦૦૦ BOM'
           : language === 'hi'
-            ? 'हार्डवेयर और कीबोर्ड ब्लूप्रिंट'
-            : 'Hardware & Keyboard BOM',
+            ? 'हार्डवेयर और ₹68,000 BOM'
+            : 'Hardware & ₹68,000 BOM',
       subtitle:
         language === 'gu'
-          ? '૧૬MP ઓવરહેડ સ્કેન પ્લેટ, ફેસ-કેમ અને કીબોર્ડ-માઉસ ટ્રે (₹૬૮,૦૦૦).'
-          : '5-zone schematic with 16MP scan platen & keyboard tray.',
+          ? '૧૬MP ઓવરહેડ સ્કેન પ્લેટ, ૨૧.૫" ટચસ્ક્રીન અને ફેસ-કેમ બ્લુપ્રિન્ટ.'
+          : language === 'hi'
+            ? '16MP स्कैन प्लेट, 21.5" टचस्क्रीन और फेस-कैम ब्लूप्रिंट।'
+            : '5-zone kiosk schematic with 16MP scan platen & 21.5" touch display.',
       badge: '₹68,000 Make-in-India',
       icon: <Cpu className="h-5 w-5" />,
-    },
-    {
-      id: 'grant' as const,
-      number: '04',
-      title:
-        language === 'gu'
-          ? 'સરકારી ગ્રાન્ટ પિચ અને ROI'
-          : language === 'hi'
-            ? 'सरकारी अनुदान पिच और ROI'
-            : 'Grant Pitch & Impact ROI',
-      subtitle:
-        language === 'gu'
-          ? 'SSIP 2.0 અને Startup India માટે ૨૫૨ તાલુકા ROI પ્રેઝન્ટેશન.'
-          : 'PoC budget (₹2.5L) & statewide 252-Taluka ROI report.',
-      badge: 'Jury Dossier',
-      icon: <Award className="h-5 w-5" />,
     },
   ];
 
@@ -283,14 +286,16 @@ export default function HomeHubView() {
             </div>
           </div>
 
-          {/* All 4 System Modules (Clean White Cards with #D9DEE5 Border) */}
+          {/* All 3 System Modules (Clean White Cards with #D9DEE5 Border) */}
           <div className="space-y-3">
             <h2 className="font-display text-lg sm:text-xl font-bold text-[#202124]">
               {language === 'gu'
                 ? 'સંપૂર્ણ પોર્ટલ વિભાગો (All Platform Sections)'
-                : 'All Platform Modules'}
+                : language === 'hi'
+                  ? 'संपूर्ण पोर्टल अनुभाग (All Platform Sections)'
+                  : 'All Platform Modules'}
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {portalModules.map((mod) => (
                 <button
                   key={mod.id}
@@ -458,6 +463,213 @@ export default function HomeHubView() {
           </div>
 
           <DemoPrototypeNote language={language} context="form" />
+        </div>
+      </div>
+
+      {/* Interactive Statewide Scale, Cost, Certificates & Savings Simulator */}
+      <div className="bg-white border border-[#D9DEE5] rounded-3xl p-6 sm:p-7 space-y-5 shadow-[0_6px_20px_-8px_rgba(18,59,99,0.08)]">
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E3EAF5]">
+          <div className="flex items-center gap-3">
+            <div className="h-11 w-11 rounded-xl bg-[#EEF4FB] border border-[#D9DEE5] text-[#123B63] flex items-center justify-center shrink-0">
+              <SlidersHorizontal className="h-5 w-5 text-[#D32828]" />
+            </div>
+            <div>
+              <h2 className="font-display text-lg sm:text-xl font-extrabold text-[#123B63]">
+                {language === 'gu'
+                  ? 'લાઇવ તાલુકા ડિપ્લોયમેન્ટ અને બચત સિમ્યુલેટર (ROI Simulator)'
+                  : language === 'hi'
+                    ? 'लाइव तालुका परिनियोजन और बचत सिम्युलेटर (ROI Simulator)'
+                    : 'Interactive Taluka Deployment & Savings Simulator'}
+              </h2>
+              <p className="text-xs sm:text-sm text-[#5F6368] mt-0.5">
+                {language === 'gu'
+                  ? 'તાલુકાઓની સંખ્યા પસંદ કરો અને જુઓ: કુલ ખર્ચ (₹૬૮,૦૦૦/કિઓસ્ક), દર વર્ષે ઇસ્યુ થતા સર્ટિફિકેટ, નાગરિક બચત અને કામની ઝડપ.'
+                  : language === 'hi'
+                    ? 'तालुका की संख्या चुनें और देखें: कुल लागत (₹68,000/कियोस्क), वार्षिक प्रमाणपत्र, नागरिक बचत और कार्य गति।'
+                    : 'Slide to project kiosk cost (₹68,000/unit), annual certificates issued, citizen savings, and officer hours saved.'}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="text-right">
+              <div className="text-xs font-semibold text-[#5F6368]">
+                {language === 'gu'
+                  ? 'પસંદ કરેલ તાલુકા'
+                  : language === 'hi'
+                    ? 'चयनित तालुका'
+                    : 'Selected Scale'}
+              </div>
+              <div className="font-mono text-2xl sm:text-3xl font-extrabold text-[#123B63] tabular-nums">
+                {talukaCount}{' '}
+                <span className="text-base font-bold text-[#D32828]">
+                  {language === 'gu' ? 'તાલુકા' : language === 'hi' ? 'तालुका' : 'Talukas'}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Range Slider + Quick Scale Presets */}
+        <div className="space-y-3">
+          <input
+            type="range"
+            min={1}
+            max={252}
+            value={talukaCount}
+            onChange={(e) => setTalukaCount(Number(e.target.value))}
+            aria-label="Number of Talukas Deployed"
+            className="w-full accent-[#D32828] cursor-pointer h-2"
+          />
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+            {[
+              {count: 1, labelGu: '૧ તાલુકો (Pilot)', labelEn: '1 Taluka (Pilot)'},
+              {count: 33, labelGu: '૩૩ જિલ્લા (૧-૧)', labelEn: '33 Districts (1 each)'},
+              {count: 125, labelGu: '૧૨૫ તાલુકા', labelEn: '125 Talukas'},
+              {count: 252, labelGu: '૨૫૨ તાલુકા (આખું ગુજરાત)', labelEn: '252 Talukas (All Gujarat)'},
+            ].map((preset) => {
+              const isPreset = talukaCount === preset.count;
+              return (
+                <button
+                  key={preset.count}
+                  type="button"
+                  onClick={() => setTalukaCount(preset.count)}
+                  className={`px-3 py-1.5 rounded-lg border font-bold transition-colors cursor-pointer ${
+                    isPreset
+                      ? 'bg-[#123B63] text-white border-[#123B63]'
+                      : 'bg-[#F6F8FA] text-[#5F6368] border-[#D9DEE5] hover:border-[#123B63] hover:text-[#123B63]'
+                  }`}
+                >
+                  {language === 'gu' ? preset.labelGu : preset.labelEn}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 4 Impact & Cost Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+          <div className="bg-[#F6F8FA] border border-[#D9DEE5] rounded-2xl p-4 space-y-1">
+            <div className="flex items-center justify-between text-xs font-bold text-[#5F6368]">
+              <span>
+                {language === 'gu'
+                  ? 'કુલ કિઓસ્ક ખર્ચ (Total Cost)'
+                  : language === 'hi'
+                    ? 'कुल कियोस्क लागत'
+                    : 'Total Kiosk Cost'}
+              </span>
+              <IndianRupee className="h-4 w-4 text-[#123B63]" />
+            </div>
+            <div className="font-mono text-2xl font-extrabold text-[#123B63] tabular-nums pt-1">
+              {formatCrOrLakhs(hardwareCapex)}
+            </div>
+            <div className="text-[11px] font-medium text-[#5F6368]">
+              {talukaCount} {language === 'gu' ? 'યુનિટ × ₹૬૮,૦૦૦/કિઓસ્ક' : 'units × ₹68,000/kiosk'}
+            </div>
+          </div>
+
+          <div className="bg-[#F6F8FA] border border-[#D9DEE5] rounded-2xl p-4 space-y-1">
+            <div className="flex items-center justify-between text-xs font-bold text-[#5F6368]">
+              <span>
+                {language === 'gu'
+                  ? 'દર વર્ષે ઇસ્યુ સર્ટિફિકેટ / ફોર્મ'
+                  : language === 'hi'
+                    ? 'वार्षिक जारी प्रमाणपत्र / फॉर्म'
+                    : 'Certificates Issued / Year'}
+              </span>
+              <FileCheck2 className="h-4 w-4 text-[#123B63]" />
+            </div>
+            <div className="font-mono text-2xl font-extrabold text-[#123B63] tabular-nums pt-1">
+              {annualCertificates.toLocaleString('en-IN')}
+            </div>
+            <div className="text-[11px] font-medium text-[#5F6368]">
+              {language === 'gu'
+                ? 'રોજની ~૧૦૦ અરજી / તાલુકો'
+                : '~100 applications/day/Taluka'}
+            </div>
+          </div>
+
+          <div className="bg-[#ECF7F0] border border-[#046A38]/25 rounded-2xl p-4 space-y-1">
+            <div className="flex items-center justify-between text-xs font-bold text-[#046A38]">
+              <span>
+                {language === 'gu'
+                  ? 'નાગરિકોની વાર્ષિક બચત'
+                  : language === 'hi'
+                    ? 'नागरिकों की वार्षिक बचत'
+                    : 'Annual Citizen Savings'}
+              </span>
+              <CheckCircle2 className="h-4 w-4 text-[#046A38]" />
+            </div>
+            <div className="font-mono text-2xl font-extrabold text-[#046A38] tabular-nums pt-1">
+              {formatCrOrLakhs(citizenSavingsInr)}
+            </div>
+            <div className="text-[11px] font-semibold text-[#046A38]/85">
+              {language === 'gu'
+                ? 'દલાલો અને ધક્કાનો ₹૧,૨૦૦/ફોર્મ ખર્ચ બચે'
+                : 'Eliminates touts & repeat travel'}
+            </div>
+          </div>
+
+          <div className="bg-[#FFF7F7] border border-[#D32828]/25 rounded-2xl p-4 space-y-1">
+            <div className="flex items-center justify-between text-xs font-bold text-[#D32828]">
+              <span>
+                {language === 'gu'
+                  ? 'અધિકારીઓના બચેલા કલાક (મદદ)'
+                  : language === 'hi'
+                    ? 'अधिकारियों के बचाए गए घंटे'
+                    : 'Officer Hours Saved'}
+              </span>
+              <Clock className="h-4 w-4 text-[#D32828]" />
+            </div>
+            <div className="font-mono text-2xl font-extrabold text-[#D32828] tabular-nums pt-1">
+              {officerHoursSaved.toLocaleString('en-IN')}{' '}
+              <span className="text-sm font-bold">
+                {language === 'gu' ? 'કલાક' : 'hrs'}
+              </span>
+            </div>
+            <div className="text-[11px] font-semibold text-[#D32828]/85">
+              {language === 'gu'
+                ? 'ફાઇલ દીઠ ૧૪.૭૫ મિનિટની બચત (૬૦x ઝડપી)'
+                : '14.75 min saved per file (60x faster)'}
+            </div>
+          </div>
+        </div>
+
+        {/* Speed & Direct Help Summary Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+          <div className="flex items-center gap-3 rounded-xl bg-[#FAF6EE] border border-[#ECE3D0] px-4 py-3">
+            <Zap className="h-5 w-5 text-[#F0A900] shrink-0" />
+            <div className="text-xs">
+              <div className="font-extrabold text-[#202124]">
+                {language === 'gu' ? 'કામની ઝડપ: ૧૫ દિવસ → ૧૦ મિનિટ' : 'Citizen Speed: 15 Days → 10 Min'}
+              </div>
+              <div className="text-[#5F6368]">
+                {language === 'gu' ? 'નાગરિકે વારંવાર ધક્કા ખાવા ન પડે' : 'Zero repeat trips to Taluka Kacheri'}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl bg-[#FAF6EE] border border-[#ECE3D0] px-4 py-3">
+            <ShieldCheck className="h-5 w-5 text-[#046A38] shrink-0" />
+            <div className="text-xs">
+              <div className="font-extrabold text-[#202124]">
+                {language === 'gu' ? 'અધિકારી ચકાસણી: ૧૫ મિનિટ → ૧૫ સેકન્ડ' : 'Officer Scrutiny: 15 Min → 15 Sec'}
+              </div>
+              <div className="text-[#5F6368]">
+                {language === 'gu' ? '૧-ક્લિક DSC થી તરત મંજૂરી' : '60x faster 1-Click DSC approval'}
+              </div>
+            </div>
+          </div>
+          <div className="flex items-center gap-3 rounded-xl bg-[#FAF6EE] border border-[#ECE3D0] px-4 py-3">
+            <Sparkles className="h-5 w-5 text-[#123B63] shrink-0" />
+            <div className="text-xs">
+              <div className="font-extrabold text-[#202124]">
+                {language === 'gu' ? 'ફોર્મ રિજેક્શન: ૬૨% → ૦%' : 'Rejection Rate: 62% → 0%'}
+              </div>
+              <div className="text-[#5F6368]">
+                {language === 'gu' ? 'અવાજ અને ૬-ડોક્યુમેન્ટ OCR થી ૧૦૦% ચોકસાઈ' : '100% pre-verified before submission'}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

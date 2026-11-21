@@ -2,7 +2,7 @@ export type LanguageCode = 'gu' | 'hi' | 'en';
 
 export type ServiceKey = 'caste' | 'income' | 'domicile';
 
-export type ViewMode = 'home' | 'kiosk' | 'mamlatdar' | 'blueprint' | 'grant';
+export type ViewMode = 'home' | 'kiosk' | 'mamlatdar' | 'blueprint';
 
 export type ApplicationStatus = 'Pending Mamlatdar DSC' | 'Certificate Issued';
 

@@ -7,7 +7,6 @@ import {
   ShieldCheck,
   Cpu,
   Globe,
-  Award,
 } from 'lucide-react';
 import {useSeva} from '@/lib/seva-store';
 import {cancelBuiltInSpeech, primeBuiltInSpeech} from '@/lib/built-in-speech';
@@ -57,12 +56,6 @@ export default function TopNavbar() {
       label: '3. Hardware & BOM',
       shortLabel: '3. Hardware',
       icon: <Cpu className="h-4 w-4 shrink-0" />,
-    },
-    {
-      id: 'grant',
-      label: '4. Grant Pitch',
-      shortLabel: '4. Grant',
-      icon: <Award className="h-4 w-4 shrink-0" />,
     },
   ];
 
