@@ -1,0 +1,6 @@
+{
+  "name": "SevaAI — Smart Taluka Kiosk",
+  "description": "Smart Taluka Kacheri E-Governance Kiosk, Voice-Assisted Citizen Terminal, and Mamlatdar DSC Approval Portal.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

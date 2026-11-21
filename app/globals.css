@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --aadhaar-red: #D32828;
+    --aadhaar-error: #B3261E;
+    --aadhaar-saffron: #F0A900;
+    --aadhaar-yellow: #FAB401;
+    --aadhaar-green: #046A38;
+    --aadhaar-navy: #123B63;
+
+    --text-primary: #202124;
+    --text-secondary: #5F6368;
+    --background: #F6F8FA;
+    --surface: #FFFFFF;
+    --border: #D9DEE5;
+
+    --font-sans-stack: "Plus Jakarta Sans", "Public Sans", "Noto Sans Gujarati", "Noto Sans Devanagari", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-display-stack: "Plus Jakarta Sans", "Noto Sans Gujarati", "Noto Sans Devanagari", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --font-mono-stack: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  body {
+    font-family: var(--font-sans-stack);
+    background-color: var(--background);
+    color: var(--text-primary);
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display-stack);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono-stack);
+  }
+}
+
+.uidai-hero-gradient {
+  background: linear-gradient(112deg, #123B63 0%, #17497A 62%, #1D5891 100%);
+}
+
+.uidai-card {
+  background-color: #FFFFFF;
+  border: 1px solid #D9DEE5;
+  box-shadow: 0 2px 10px rgba(18, 59, 99, 0.04);
+}
+
+.myaadhaar-lavender-panel {
+  background-color: #F2F4FA;
+  border: 1px solid #E2E6F2;
+}
+
+.myaadhaar-sand-panel {
+  background-color: #FAF6EE;
+  border: 1px solid #ECE3D0;
+}
+
+@keyframes laserSweep {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-laser-sweep {
+  animation: laserSweep 1.6s ease-in-out infinite;
+}
+
+@media print {
+  body {
+    background: #FFFFFF !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only-certificate {
+    box-shadow: none !important;
+    border: 2px solid #123B63 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}

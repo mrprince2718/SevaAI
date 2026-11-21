@@ -1,0 +1,12 @@
+node_modules/
+.next/
+.netlify/
+out/
+build/
+coverage/
+*.tsbuildinfo
+.DS_Store
+*.log
+.env*
+!.env.example
+public/assets/aistudio/
